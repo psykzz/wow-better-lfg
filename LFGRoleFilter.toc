@@ -1,0 +1,8 @@
+## Interface: 16001
+## Title: LFG Role Filter
+## Notes: Filter LFG groups and players by roles, level, and class.
+## Author: psykzz
+## Version: 0.4.0
+## SavedVariablesPerCharacter: LFGRoleFilterDB
+
+LFGRoleFilter.lua

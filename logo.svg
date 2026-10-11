@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-labelledby="title description">
+  <title id="title">Better LFG</title>
+  <desc id="description">A party of three above a gold filter inside a shield.</desc>
+  <defs>
+    <linearGradient id="background" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#30363d"/>
+      <stop offset="1" stop-color="#171c23"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#f1d99a"/>
+      <stop offset="1" stop-color="#bd8b45"/>
+    </linearGradient>
+  </defs>
+  <rect x="8" y="8" width="240" height="240" rx="48" fill="url(#background)"/>
+  <circle cx="128" cy="128" r="101" fill="none" stroke="url(#gold)" stroke-width="3"/>
+  <path d="M128 40 190 65v48c0 43-24 77-62 101-38-24-62-58-62-101V65z" fill="#252c34" stroke="url(#gold)" stroke-width="4" stroke-linejoin="round"/>
+  <g fill="#ead6a2" stroke="#bd8b45" stroke-width="3">
+    <circle cx="91" cy="87" r="11"/>
+    <circle cx="128" cy="77" r="13"/>
+    <circle cx="165" cy="87" r="11"/>
+  </g>
+  <g fill="none" stroke="#bd8b45" stroke-linecap="round" stroke-width="8">
+    <path d="M72 119c1-14 10-22 19-22s18 8 19 22"/>
+    <path d="M104 112c2-17 11-26 24-26s22 9 24 26"/>
+    <path d="M146 119c1-14 10-22 19-22s18 8 19 22"/>
+  </g>
+  <path d="M76 132h104l-39 39v25h-26v-25z" fill="url(#gold)" stroke="#f1d99a" stroke-linejoin="round" stroke-width="2"/>
+</svg>
