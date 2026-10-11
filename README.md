@@ -1,6 +1,6 @@
-# Better LFG for WoW Forever
+# Better LFG filters for WoW Forever
 
-![Better LFG logo](logo.svg)
+![Better LFG logo](logo.png)
 
 **Less scrolling, better groups.** Native-first role, class, and level filters
 that fit naturally into WoW Forever's familiar LFG interface.
@@ -50,3 +50,17 @@ multi-member group listings; player filters only evaluate solo player listings.
 
 The addon targets WoW Forever interface `16001`. It uses the client's native
 `C_LFGList.GetSearchResultMemberCounts` role and remaining-slot data.
+
+## Releases
+
+Push an annotated version tag to package the addon, create a GitHub release, and
+upload it to CurseForge project `1738917`:
+
+```powershell
+git tag -a 0.5.0 -m "0.5.0"
+git push origin 0.5.0
+```
+
+The release workflow uses the repository secret `CURSEFORGE_API_TOKEN` for
+CurseForge uploads. GitHub's automatically provided `GITHUB_TOKEN` is used to
+create the GitHub release.

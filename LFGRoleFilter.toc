@@ -1,8 +1,9 @@
 ## Interface: 16001
-## Title: LFG Role Filter
-## Notes: Filter LFG groups and players by roles, level, and class.
+## Title: Better LFG filters
+## Notes: Native-first role, class, and level filters for WoW Forever.
 ## Author: psykzz
-## Version: 0.4.0
+## Version: @project-version@
+## X-Curse-Project-ID: 1738917
 ## SavedVariablesPerCharacter: LFGRoleFilterDB
 
 LFGRoleFilter.lua
