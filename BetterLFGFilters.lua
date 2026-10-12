@@ -70,11 +70,11 @@ local function getSelectedRoleFlags()
 end
 
 local function initializeSettings()
-    if type(LFGRoleFilterDB) ~= "table" then
-        LFGRoleFilterDB = {}
+    if type(BetterLFGFiltersDB) ~= "table" then
+        BetterLFGFiltersDB = {}
     end
 
-    settings = LFGRoleFilterDB
+    settings = BetterLFGFiltersDB
     local version = tonumber(settings.version) or 0
     if version < 1 then
         if settings.requireTank == nil then

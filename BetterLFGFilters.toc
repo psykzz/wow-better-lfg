@@ -4,6 +4,6 @@
 ## Author: psykzz
 ## Version: @project-version@
 ## X-Curse-Project-ID: 1738917
-## SavedVariablesPerCharacter: LFGRoleFilterDB
+## SavedVariablesPerCharacter: BetterLFGFiltersDB
 
 BetterLFGFilters.lua
