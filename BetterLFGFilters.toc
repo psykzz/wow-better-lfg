@@ -6,4 +6,4 @@
 ## X-Curse-Project-ID: 1738917
 ## SavedVariablesPerCharacter: LFGRoleFilterDB
 
-LFGRoleFilter.lua
+BetterLFGFilters.lua

@@ -43,7 +43,7 @@ multi-member group listings; player filters only evaluate solo player listings.
 
 ## Install
 
-1. Place the `LFGRoleFilter` folder in `Interface\AddOns`.
+1. Place the `BetterLFGFilters` folder in `Interface\AddOns`.
 2. Reload the game UI with `/reload`.
 3. Open Group Finder, select **Groups**, and open the options cog to change
    the role filters.
