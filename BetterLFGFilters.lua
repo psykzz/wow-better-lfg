@@ -655,14 +655,15 @@ local function install()
     hookResultListUpdate(frame, scrollBox)
     installed = true
     browseFrame:UpdateResultList()
-    print(addonName .. " loaded in the Groups list.")
     return true
 end
 
 local events = CreateFrame("Frame")
+local initialLogin
 events:RegisterEvent("ADDON_LOADED")
 events:RegisterEvent("PLAYER_LOGIN")
-events:SetScript("OnEvent", function(self, event)
+events:RegisterEvent("PLAYER_ENTERING_WORLD")
+events:SetScript("OnEvent", function(self, event, ...)
     if event == "GROUP_ROSTER_UPDATE" then
         if settings.groupFit then
             browseFrame:UpdateResultList()
@@ -670,8 +671,18 @@ events:SetScript("OnEvent", function(self, event)
         return
     end
 
+    if event == "PLAYER_ENTERING_WORLD" then
+        initialLogin = ...
+        self:UnregisterEvent(event)
+    end
+
     if install() then
-        self:UnregisterAllEvents()
+        if initialLogin then
+            print(addonName .. " loaded in the Groups list.")
+            initialLogin = false
+        end
+        self:UnregisterEvent("ADDON_LOADED")
+        self:UnregisterEvent("PLAYER_LOGIN")
         self:RegisterEvent("GROUP_ROSTER_UPDATE")
     end
 end)
