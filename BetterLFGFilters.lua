@@ -2,6 +2,8 @@ local addonName = ...
 local settings
 local browseFrame
 local installed
+local playstyleInstalled
+local playstyleWarningShown
 local roleDataWarningShown
 local menuWarningShown
 local providerWarningShown
@@ -152,6 +154,9 @@ local function initializeSettings()
     end
     if type(settings.playerClasses) ~= "table" then
         settings.playerClasses = {}
+    end
+    if type(settings.playstyle) ~= "number" then
+        settings.playstyle = nil
     end
 
     local supportedClasses = {}
@@ -615,7 +620,84 @@ local function addOptionsMenuItems(optionsButton)
     return true
 end
 
+local function isValidPlaystyle(value)
+    local playstyles = Enum and Enum.LFGEntryGeneralPlaystyle
+    if type(value) ~= "number" or not playstyles then
+        return false
+    end
+    for _, playstyle in pairs(playstyles) do
+        if playstyle == value then
+            return true
+        end
+    end
+    return false
+end
+
+local function applyDefaultPlaystyle(activityView)
+    local playstyles = Enum and Enum.LFGEntryGeneralPlaystyle
+    if not playstyles
+        or not activityView.PlayStyleDropdown
+        or activityView.generalPlaystyle ~= nil
+    then
+        return
+    end
+
+    local playstyle = settings.playstyle
+    if not isValidPlaystyle(playstyle) then
+        playstyle = playstyles.FunRelaxed
+    end
+    if not playstyle then
+        return
+    end
+
+    _G.LFGListingActivityView_OnPlayStyleSelectedInternal(activityView, playstyle)
+    activityView.PlayStyleDropdown:GenerateMenu()
+end
+
+local function rememberPlaystyle(activityView, playstyle)
+    if isValidPlaystyle(playstyle) then
+        settings.playstyle = playstyle
+    end
+end
+
+local function installPlaystyle()
+    if playstyleInstalled then
+        return
+    end
+
+    local listingFrame = _G.LFGListingFrame
+    local activityView = listingFrame and listingFrame.ActivityView
+    if not activityView then
+        return
+    end
+
+    if type(_G.LFGListingActivityView_OnPlayStyleSelectedInternal) ~= "function"
+        or type(activityView.HookScript) ~= "function"
+    then
+        if not playstyleWarningShown then
+            print(addonName .. ": could not set a default group playstyle.")
+            playstyleWarningShown = true
+        end
+        return
+    end
+
+    if not settings then
+        initializeSettings()
+    end
+
+    -- The XML binds OnShow at load time, so hook the script, not the global.
+    activityView:HookScript("OnShow", applyDefaultPlaystyle)
+    -- The dropdown calls this global by name on every selection.
+    hooksecurefunc("LFGListingActivityView_OnPlayStyleSelectedInternal", rememberPlaystyle)
+    playstyleInstalled = true
+    if activityView:IsShown() then
+        applyDefaultPlaystyle(activityView)
+    end
+end
+
 local function install()
+    installPlaystyle()
+
     if installed then
         return true
     end
@@ -631,7 +713,9 @@ local function install()
         return false
     end
 
-    initializeSettings()
+    if not settings then
+        initializeSettings()
+    end
     browseFrame = frame
     if not addOptionsMenuItems(optionsButton) then
         if not menuWarningShown then
