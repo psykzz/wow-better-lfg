@@ -41,6 +41,12 @@ role-specific **Needs** option if one role was selected. Blizzard's **Show All
 Level Ranges** setting remains in the menu. Group filters only evaluate
 multi-member group listings; player filters only evaluate solo player listings.
 
+## Default playstyle
+
+Forever requires a playstyle before you can post a group. Better LFG
+preselects **Relaxed** in the Group Finder listing when you have not chosen
+one. A playstyle you pick yourself is never overridden.
+
 ## Install
 
 1. Place the `BetterLFGFilters` folder in `Interface\AddOns`.

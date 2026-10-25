@@ -2,6 +2,8 @@ local addonName = ...
 local settings
 local browseFrame
 local installed
+local playstyleInstalled
+local playstyleWarningShown
 local roleDataWarningShown
 local menuWarningShown
 local providerWarningShown
@@ -615,7 +617,52 @@ local function addOptionsMenuItems(optionsButton)
     return true
 end
 
+local function applyDefaultPlaystyle(activityView)
+    local relaxed = Enum and Enum.LFGEntryGeneralPlaystyle
+        and Enum.LFGEntryGeneralPlaystyle.FunRelaxed
+    if not relaxed
+        or not activityView.PlayStyleDropdown
+        or activityView.generalPlaystyle ~= nil
+    then
+        return
+    end
+
+    _G.LFGListingActivityView_OnPlayStyleSelectedInternal(activityView, relaxed)
+    activityView.PlayStyleDropdown:GenerateMenu()
+end
+
+local function installPlaystyle()
+    if playstyleInstalled then
+        return
+    end
+
+    local listingFrame = _G.LFGListingFrame
+    local activityView = listingFrame and listingFrame.ActivityView
+    if not activityView then
+        return
+    end
+
+    if type(_G.LFGListingActivityView_OnPlayStyleSelectedInternal) ~= "function"
+        or type(activityView.HookScript) ~= "function"
+    then
+        if not playstyleWarningShown then
+            print(addonName .. ": could not set a default group playstyle.")
+            playstyleWarningShown = true
+        end
+        return
+    end
+
+    -- The XML binds OnShow at load time, so hook the script, not the global.
+    activityView:HookScript("OnShow", applyDefaultPlaystyle)
+    playstyleInstalled = true
+    if activityView:IsShown() then
+        applyDefaultPlaystyle(activityView)
+    end
+end
+
 local function install()
+    installPlaystyle()
+
     if installed then
         return true
     end
