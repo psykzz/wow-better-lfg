@@ -45,7 +45,9 @@ multi-member group listings; player filters only evaluate solo player listings.
 
 Forever requires a playstyle before you can post a group. Better LFG
 preselects **Relaxed** in the Group Finder listing when you have not chosen
-one. A playstyle you pick yourself is never overridden.
+one. When you pick a different playstyle, Better LFG remembers it per
+character and preselects it from then on. A playstyle chosen in the current
+session is never overridden.
 
 ## Install
 
