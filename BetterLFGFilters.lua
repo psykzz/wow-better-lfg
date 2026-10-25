@@ -602,27 +602,16 @@ local function createFilterMenuItems(rootDescription)
     end
 end
 
-local function extendOptionsMenu(optionsButton)
-    local nativeSetupOptionsMenu = optionsButton.SetupOptionsMenu
-    local nativeSetupMenu = optionsButton.SetupMenu
-    if type(nativeSetupOptionsMenu) ~= "function" or type(nativeSetupMenu) ~= "function" then
+local function addOptionsMenuItems(optionsButton)
+    if not Menu or type(Menu.ModifyMenu) ~= "function" then
         return false
     end
 
-    optionsButton.SetupMenu = function(self, initializeMenu, ...)
-        local wrappedInitialize = function(dropdown, rootDescription, ...)
-            initializeMenu(dropdown, rootDescription, ...)
+    Menu.ModifyMenu("MENU_LFG_LISTING_SETTINGS", function(owner, rootDescription)
+        if owner == optionsButton then
             createFilterMenuItems(rootDescription)
         end
-        return nativeSetupMenu(self, wrappedInitialize, ...)
-    end
-
-    local ok, err = pcall(nativeSetupOptionsMenu, optionsButton)
-    optionsButton.SetupMenu = nativeSetupMenu
-    if not ok then
-        error(err, 0)
-    end
-
+    end)
     return true
 end
 
@@ -644,9 +633,9 @@ local function install()
 
     initializeSettings()
     browseFrame = frame
-    if not extendOptionsMenu(optionsButton) then
+    if not addOptionsMenuItems(optionsButton) then
         if not menuWarningShown then
-            print(addonName .. ": could not add role filters to the LFG options menu.")
+            print(addonName .. ": the LFG options menu cannot be extended.")
             menuWarningShown = true
         end
         return false
